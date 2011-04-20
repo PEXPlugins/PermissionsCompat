@@ -1,0 +1,6 @@
+name: Permissions
+main: com.nijikokun.bukkit.permissions.Permissions
+version: 100
+author: t3hk0d3, TheYeti, Nijiko
+website: www.bukkit.org
+description: Compatibility layer between original Permissions and PermissionsEx
