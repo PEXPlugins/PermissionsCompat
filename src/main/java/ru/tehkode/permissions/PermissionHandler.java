@@ -1,6 +1,7 @@
 package ru.tehkode.permissions;
 
 import java.util.Map;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
@@ -53,6 +54,8 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean permission(Player player, String permission) {
+        Logger.getLogger("Minecraft").info("Waringn: " + this.permissionManager);
+
         PermissionUser user = this.permissionManager.getUser(player.getName());
 
         return user.has(permission, player.getWorld().getName());

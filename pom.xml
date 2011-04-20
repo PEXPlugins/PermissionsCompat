@@ -4,14 +4,14 @@
     <groupId>com.nijikokun.bukkit</groupId>
     <artifactId>PermissionsCompat</artifactId>
     <version>100</version>
-    <name>PermissionsCompat</name>
+    <name>Permissions</name>
     <url>https://github.com/t3hk0d3/PermissionsCompat</url>
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/t3hk0d3/PermissionsCompat/issues</url>
     </issueManagement>
     <build>
-        <finalName>PermissionsCompat</finalName>
+        <finalName>Permissions</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

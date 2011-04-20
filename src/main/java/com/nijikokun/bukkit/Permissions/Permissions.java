@@ -51,12 +51,9 @@ public class Permissions extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Plugin permissionex = this.getServer().getPluginManager().getPlugin("PermissionsEx");
-
-        if (permissionex != null) {
-            PermissionsPlugin permissions = (PermissionsPlugin) permissionex;
-            Security = new ru.tehkode.permissions.PermissionHandler(permissions.permissionsManager);
-        } else {
+        try {
+            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsPlugin.getPermissionManager());
+        } catch (RuntimeException e) {
             Logger.getLogger("Minecraft").warning("[PermissionsCompat] PermissionsEx plugin not found. Some plugins may not work.");
         }
     }
@@ -68,7 +65,7 @@ public class Permissions extends JavaPlugin {
 
     public PermissionHandler getHandler() {
         if (Security == null) {
-            throw new RuntimeException("There is issue with plugin, which tr check permissions while Permissions plugin disabled");
+            throw new RuntimeException("There is issue with plugin, which trying to check permissions while Permissions plugin disabled");
         }
 
         return Security;
