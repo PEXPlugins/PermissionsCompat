@@ -54,10 +54,10 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean permission(Player player, String permission) {
-        Logger.getLogger("Minecraft").info("Waringn: " + this.permissionManager);
-
         PermissionUser user = this.permissionManager.getUser(player.getName());
-
+        if(user == null){
+            return false;
+        }
         return user.has(permission, player.getWorld().getName());
     }
 
