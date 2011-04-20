@@ -1,5 +1,5 @@
 name: Permissions
-main: com.nijikokun.bukkit.permissions.Permissions
+main: com.nijikokun.bukkit.Permissions.Permissions
 version: 100
 author: t3hk0d3, TheYeti, Nijiko
 website: www.bukkit.org

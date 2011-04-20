@@ -11,7 +11,7 @@
         <url>https://github.com/t3hk0d3/PermissionsCompat/issues</url>
     </issueManagement>
     <build>
-        <finalName>Permissions</finalName>
+        <finalName>PermissionsCompat</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
