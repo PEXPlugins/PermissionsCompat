@@ -43,14 +43,14 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>ru.tehkode.permissions.bukkit</groupId>
-            <artifactId>PermissionsEx</artifactId>
-            <version>100</version>
-        </dependency>
-        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>Bukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.tehkode</groupId>
+            <artifactId>permissionsex</artifactId>
+            <version>100</version>
         </dependency>
     </dependencies>
     

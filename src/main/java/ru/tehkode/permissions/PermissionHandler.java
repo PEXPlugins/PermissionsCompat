@@ -1,7 +1,6 @@
 package ru.tehkode.permissions;
 
 import java.util.Map;
-import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
@@ -83,7 +82,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String[] getGroups(String world, String userName) {
-        return this.permissionManager.getUser(userName).getGroupNames();
+        return this.permissionManager.getUser(userName).getGroupsNames();
     }
 
     /**
