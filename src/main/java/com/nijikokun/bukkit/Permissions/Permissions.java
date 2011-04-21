@@ -1,6 +1,5 @@
 package com.nijikokun.bukkit.Permissions;
 
-import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
 import com.nijiko.permissions.PermissionHandler;
@@ -65,7 +64,7 @@ public class Permissions extends JavaPlugin {
 
     public PermissionHandler getHandler() {
         if (Security == null) {
-            throw new RuntimeException("There is issue with plugin, which trying to check permissions while Permissions plugin disabled");
+            throw new RuntimeException("There is issue with plugin, which trying to check permissions while PermissionsEx plugin disabled");
         }
 
         return Security;
