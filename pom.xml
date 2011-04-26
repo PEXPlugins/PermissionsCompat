@@ -44,13 +44,19 @@
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>Bukkit</artifactId>
+            <artifactId>bukkit</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ru.tehkode</groupId>
             <artifactId>permissionsex</artifactId>
             <version>100</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>Help</artifactId>
+                    <groupId>me.taylorkelly.help</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     
