@@ -180,7 +180,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getGroupPermissionString(String world, String groupName, String permission) {
-        return this.permissionManager.getGroup(groupName).getPermissionValue(permission, world);
+        return this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
     }
 
     /**
@@ -195,7 +195,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public int getGroupPermissionInteger(String world, String groupName, String permission) {
-        String value = this.permissionManager.getGroup(groupName).getPermissionValue(permission, world);
+        String value = this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
         return value.isEmpty() ? -1 : Integer.parseInt(value);
     }
 
@@ -210,7 +210,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean getGroupPermissionBoolean(String world, String groupName, String permission) {
-        return Boolean.parseBoolean(this.permissionManager.getGroup(groupName).getPermissionValue(permission, world));
+        return Boolean.parseBoolean(this.permissionManager.getGroup(groupName).getOptionValue(permission, world));
     }
 
     /**
@@ -225,7 +225,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public double getGroupPermissionDouble(String world, String groupName, String permission) {
-        String value = this.permissionManager.getGroup(groupName).getPermissionValue(permission, world);
+        String value = this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
         return value.isEmpty() ? -1.0d :  Double.parseDouble(value);
     }
 
@@ -241,7 +241,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getUserPermissionString(String world, String userName, String permission) {
-        return this.permissionManager.getUser(userName).getPermissionValue(permission, world);
+        return this.permissionManager.getUser(userName).getOptionValue(permission, world);
     }
 
     /**
@@ -256,7 +256,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public int getUserPermissionInteger(String world, String userName, String permission) {
-        String value = this.permissionManager.getUser(userName).getPermissionValue(permission, world);
+        String value = this.permissionManager.getUser(userName).getOptionValue(permission, world);
         return value.isEmpty() ? -1 : Integer.parseInt(value);
     }
 
@@ -272,7 +272,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean getUserPermissionBoolean(String world, String userName, String permission) {
-        return Boolean.parseBoolean(this.permissionManager.getUser(userName).getPermissionValue(permission, world));
+        return Boolean.parseBoolean(this.permissionManager.getUser(userName).getOptionValue(permission, world));
     }
 
     /**
@@ -287,7 +287,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public double getUserPermissionDouble(String world, String userName, String permission) {
-        String value = this.permissionManager.getUser(userName).getPermissionValue(permission, world);
+        String value = this.permissionManager.getUser(userName).getOptionValue(permission, world);
         return value.isEmpty() ? -1.0d :  Double.parseDouble(value);
     }
 
