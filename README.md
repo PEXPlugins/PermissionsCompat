@@ -1,0 +1,1 @@
+@todo Here should be instructions how to install and use PermissionsEx comatibility layer. 
