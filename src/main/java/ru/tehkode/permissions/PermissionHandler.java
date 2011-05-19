@@ -241,6 +241,15 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getUserPermissionString(String world, String userName, String permission) {
+
+        // fixture for prefix/suffix compatiblity issues with ichat
+        if(permission.equals("prefix")){
+            return this.permissionManager.getUser(userName).getPrefix();
+        }
+        if(permission.equals("suffix")){
+            return this.permissionManager.getUser(userName).getSuffix();
+        }
+
         return this.permissionManager.getUser(userName).getOptionValue(permission, world);
     }
 
