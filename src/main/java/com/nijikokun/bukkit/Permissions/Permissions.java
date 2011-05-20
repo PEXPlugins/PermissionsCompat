@@ -3,11 +3,10 @@ package com.nijikokun.bukkit.Permissions;
 import org.bukkit.plugin.Plugin;
 
 import com.nijiko.permissions.PermissionHandler;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.tehkode.permissions.bukkit.PermissionsPlugin;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
  * Legacy Permissions Compatibility Layer
@@ -52,7 +51,7 @@ public class Permissions extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsPlugin.getPermissionManager());
+            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsEx.getPermissionManager());
         } catch (RuntimeException e) {
             Logger.getLogger("Minecraft").warning("[PermissionsCompat] PermissionsEx plugin not found. Some plugins may not work.");
         }
