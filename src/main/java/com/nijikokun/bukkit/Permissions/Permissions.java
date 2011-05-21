@@ -66,7 +66,6 @@ public class Permissions extends JavaPlugin {
         if (Security == null) {
             throw new RuntimeException("There is issue with plugin, which trying to check permissions while PermissionsEx plugin disabled");
         }
-
         return Security;
     }
 }

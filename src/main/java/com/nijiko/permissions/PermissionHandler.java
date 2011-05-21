@@ -27,10 +27,6 @@ import org.bukkit.util.config.Configuration;
  *
  * @author Nijiko
  */
-/**
- *            
- * @author code
- */
 public abstract class PermissionHandler {
 
     public abstract void setDefaultWorld(String world);
@@ -74,6 +70,8 @@ public abstract class PermissionHandler {
      */
     public abstract boolean has(Player player, String permission);
 
+    public abstract boolean has(String worldName, String playerName, String permission);
+
     /**
      * Checks to see if a player has permission to a specific tree node.
      * <br /><br />
@@ -93,6 +91,8 @@ public abstract class PermissionHandler {
      */
     public abstract boolean permission(Player player, String permission);
 
+    public abstract boolean permission(String worldName, String playerName, String permission);
+
     /**
      * Grabs group name.
      * <br /><br />
@@ -106,14 +106,14 @@ public abstract class PermissionHandler {
     /**
      * Grabs users groups.
      * <br /><br />
-     * 
+     *
      * @param group
      * @return Array
      */
     public abstract String[] getGroups(String world, String name);
 
     /**
-     * Checks to see if the player is in the requested group. 
+     * Checks to see if the player is in the requested group.
      *
      * @param world
      * @param name - Player
@@ -125,7 +125,7 @@ public abstract class PermissionHandler {
     /**
      * Checks to see if a player is in a single group.
      * This does not check inheritance.
-     * 
+     *
      * @param world
      * @param name - Player
      * @param group - Group to be checked
@@ -194,7 +194,7 @@ public abstract class PermissionHandler {
      * Get permission nodes from a group that contain values.
      * <br /><br />
      * Grab Group Permission String values.
-     * 
+     *
      * @param group
      * @param permission
      * @return Boolean. No boolean found return false.

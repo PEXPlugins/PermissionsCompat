@@ -34,6 +34,11 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
         return this.permission(player, permission);
     }
 
+    @Override
+    public boolean has(String worldName, String playerName, String permission) {
+        return this.permission(worldName, playerName, permission);
+    }
+
     /**
      * Checks to see if a player has permission to a specific tree node.
      * <br /><br />
@@ -53,11 +58,16 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean permission(Player player, String permission) {
-        PermissionUser user = this.permissionManager.getUser(player.getName());
+        return this.permission(player.getWorld().getName(), player.getName(), permission);
+    }
+
+    @Override
+    public boolean permission(String worldName, String playerName, String permission) {
+        PermissionUser user = this.permissionManager.getUser(playerName);
         if(user == null){
             return false;
         }
-        return user.has(permission, player.getWorld().getName());
+        return user.has(permission, worldName);
     }
 
     /**
