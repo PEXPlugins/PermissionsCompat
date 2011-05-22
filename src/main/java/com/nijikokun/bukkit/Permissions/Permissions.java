@@ -49,12 +49,17 @@ public class Permissions extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         try {
             Security = new ru.tehkode.permissions.PermissionHandler(PermissionsEx.getPermissionManager());
         } catch (RuntimeException e) {
             Logger.getLogger("Minecraft").warning("[PermissionsCompat] PermissionsEx plugin not found. Some plugins may not work.");
         }
+    }
+
+    @Override
+    public void onEnable() {
+        Logger.getLogger("Minecraft").info("[PermissionsCompat] Compatibility layer enabled.");
     }
 
     @Override
