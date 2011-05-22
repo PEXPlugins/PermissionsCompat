@@ -50,7 +50,7 @@
         <dependency>
             <groupId>ru.tehkode</groupId>
             <artifactId>PermissionsEx</artifactId>
-            <version>[100,)</version>
+            <version>[1.02,)</version>
             <exclusions>
                 <exclusion>
                     <artifactId>Help</artifactId>
