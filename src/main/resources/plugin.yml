@@ -1,6 +1,7 @@
 name: Permissions
 main: com.nijikokun.bukkit.Permissions.Permissions
-version: 1.02
-author: t3hk0d3, TheYeti, Nijiko
+depend: [ PermissionsEx ]
+version: 1.05
+authors: [ t3hk0d3, TheYeti, Nijiko ]
 website: www.bukkit.org
 description: Compatibility layer between original Permissions and PermissionsEx

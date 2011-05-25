@@ -6,6 +6,8 @@ import com.nijiko.permissions.PermissionHandler;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.tehkode.permissions.P2Backend;
+import ru.tehkode.permissions.PermissionBackend;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 /**
@@ -36,7 +38,9 @@ public class Permissions extends JavaPlugin {
 
     public Permissions() {
         super();
-
+        
+        PermissionBackend.registerBackendAlias("p2compat", P2Backend.class);
+        
         Permissions.instance = getInstance();
     }
 
@@ -50,8 +54,8 @@ public class Permissions extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        try {
-            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsEx.getPermissionManager());
+        try {            
+            Security = this.getHandler();
         } catch (RuntimeException e) {
             Logger.getLogger("Minecraft").warning("[PermissionsCompat] PermissionsEx plugin not found. Some plugins may not work.");
         }
@@ -69,8 +73,9 @@ public class Permissions extends JavaPlugin {
 
     public PermissionHandler getHandler() {
         if (Security == null) {
-            throw new RuntimeException("There is issue with plugin, which trying to check permissions while PermissionsEx plugin disabled");
+            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsEx.getPermissionManager());
         }
+
         return Security;
     }
 }
