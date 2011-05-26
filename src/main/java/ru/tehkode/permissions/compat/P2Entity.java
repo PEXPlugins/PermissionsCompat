@@ -111,6 +111,7 @@ public class P2Entity extends PermissionEntity {
             if (world.equals(this.backend.getDefaultWorld())) {
                 world = "";
             }
+            
             permissions.put(world, this.getPermissions(world, false));
         }
 
