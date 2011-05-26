@@ -17,7 +17,7 @@
     </fileSets>
     <files>
         <file>
-            <source>${project.build.directory}/${artifactId}.jar</source>
+            <source>${project.build.directory}/Permissions.jar</source>
             <outputDirectory>/</outputDirectory>
             <destName>Permissions.jar</destName>
         </file>

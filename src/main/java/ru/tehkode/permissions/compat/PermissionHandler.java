@@ -1,8 +1,11 @@
-package ru.tehkode.permissions;
+package ru.tehkode.permissions.compat;
 
 import java.util.Map;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
+import ru.tehkode.permissions.PermissionGroup;
+import ru.tehkode.permissions.PermissionManager;
+import ru.tehkode.permissions.PermissionUser;
 
 /**
  *
@@ -175,7 +178,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean canGroupBuild(String world, String groupName) {
-        return this.permissionManager.getGroup(groupName).has("build", world);
+        return true;
     }
 
     /**

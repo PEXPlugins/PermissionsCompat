@@ -6,7 +6,7 @@ import com.nijiko.permissions.PermissionHandler;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.tehkode.permissions.P2Backend;
+import ru.tehkode.permissions.compat.P2Backend;
 import ru.tehkode.permissions.PermissionBackend;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -42,6 +42,8 @@ public class Permissions extends JavaPlugin {
         PermissionBackend.registerBackendAlias("p2compat", P2Backend.class);
         
         Permissions.instance = getInstance();
+        
+        Logger.getLogger("Minecraft").info("[PermissionsCompat] Compatibility Layer Initalized!");
     }
 
     public static Plugin getInstance() {
@@ -73,7 +75,7 @@ public class Permissions extends JavaPlugin {
 
     public PermissionHandler getHandler() {
         if (Security == null) {
-            Security = new ru.tehkode.permissions.PermissionHandler(PermissionsEx.getPermissionManager());
+            Security = new ru.tehkode.permissions.compat.PermissionHandler(PermissionsEx.getPermissionManager());
         }
 
         return Security;
