@@ -1,6 +1,8 @@
 package ru.tehkode.permissions.compat;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 import ru.tehkode.permissions.PermissionGroup;
@@ -193,7 +195,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getGroupPermissionString(String world, String groupName, String permission) {
-        return this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
+        return this.permissionManager.getGroup(groupName).getOption(permission, world);
     }
 
     /**
@@ -208,8 +210,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public int getGroupPermissionInteger(String world, String groupName, String permission) {
-        String value = this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
-        return value.isEmpty() ? -1 : Integer.parseInt(value);
+        return this.permissionManager.getGroup(groupName).getOptionInteger(permission, world, -1);
     }
 
     /**
@@ -223,7 +224,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean getGroupPermissionBoolean(String world, String groupName, String permission) {
-        return Boolean.parseBoolean(this.permissionManager.getGroup(groupName).getOptionValue(permission, world));
+        return this.permissionManager.getGroup(groupName).getOptionBoolean(permission, world, false);
     }
 
     /**
@@ -238,7 +239,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public double getGroupPermissionDouble(String world, String groupName, String permission) {
-        String value = this.permissionManager.getGroup(groupName).getOptionValue(permission, world);
+        String value = this.permissionManager.getGroup(groupName).getOption(permission, world);
         return value.isEmpty() ? -1.0d :  Double.parseDouble(value);
     }
 
@@ -263,7 +264,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
             return this.permissionManager.getUser(userName).getSuffix();
         }
 
-        return this.permissionManager.getUser(userName).getOptionValue(permission, world);
+        return this.permissionManager.getUser(userName).getOption(permission, world);
     }
 
     /**
@@ -278,8 +279,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public int getUserPermissionInteger(String world, String userName, String permission) {
-        String value = this.permissionManager.getUser(userName).getOptionValue(permission, world);
-        return value.isEmpty() ? -1 : Integer.parseInt(value);
+        return this.permissionManager.getUser(userName).getOptionInteger(permission, world, -1);
     }
 
     /**
@@ -294,7 +294,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean getUserPermissionBoolean(String world, String userName, String permission) {
-        return Boolean.parseBoolean(this.permissionManager.getUser(userName).getOptionValue(permission, world));
+        return this.permissionManager.getUser(userName).getOptionBoolean(permission, world, false);
     }
 
     /**
@@ -309,8 +309,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public double getUserPermissionDouble(String world, String userName, String permission) {
-        String value = this.permissionManager.getUser(userName).getOptionValue(permission, world);
-        return value.isEmpty() ? -1.0d :  Double.parseDouble(value);
+        return this.permissionManager.getUser(userName).getOptionDouble(permission, world, -1.0);
     }
 
     /**
@@ -435,37 +434,46 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
     // Cache
     @Override
     public void setCache(String world, Map<String, Boolean> Cache) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] setCache item are internal Permissions plugin stuff. Nag plugin author.");
     }
 
     @Override
     public void setCacheItem(String world, String player, String permission, boolean data) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] setCacheItem item are internal Permissions plugin stuff. Nag plugin author.");
     }
 
     @Override
     public Map<String, Boolean> getCache(String world) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] setCacheItem item are internal Permissions plugin stuff. Nag plugin author.");
+        return new HashMap<String, Boolean>();
     }
 
     @Override
     public boolean getCacheItem(String world, String player, String permission) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] getCacheItem item are internal Permissions plugin stuff. Nag plugin author.");
+        return false;
     }
 
     @Override
     public void removeCachedItem(String world, String player, String permission) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] removeCachedItem item are internal Permissions plugin stuff. Nag plugin author.");
     }
 
     @Override
     public void clearCache(String world) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] clearCache item are internal Permissions plugin stuff. Nag plugin author.");
     }
 
     @Override
     public void clearAllCache() {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        //throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        Logger.getLogger("Minecraft").warning("[PermissionsEx] clearAllCache item are internal Permissions plugin stuff. Nag plugin author.");
     }
 
     @Override
