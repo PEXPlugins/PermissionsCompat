@@ -76,8 +76,9 @@ public class P2Entity extends PermissionEntity {
         if ((inheritance && !this.backend.getDefaultWorld().equals(world) || (world == null || world.isEmpty()))) {
             permissions.addAll(this.getDefaultWorldNode().getStringList("permissions", new LinkedList<String>()));
         }
-
-        if (this.getOption("build", world, false).equals("true")) {
+        
+        // Don't add permission if entity already have this permission
+        if (!this.has("modifyworld.blocks.place", world) && this.getOption("build", world, false).equals("true")) {
             permissions.add("modifyworld.*");
         }
 
