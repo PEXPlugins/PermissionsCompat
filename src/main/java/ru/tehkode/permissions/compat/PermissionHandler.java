@@ -3,6 +3,7 @@ package ru.tehkode.permissions.compat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 import ru.tehkode.permissions.PermissionGroup;
@@ -112,6 +113,16 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
     public boolean inGroup(String world, String userName, String groupName) {
         return this.checkInGroup(groupName, permissionManager.getUser(userName).getGroups(), true);
     }
+
+    @Override
+    public boolean inGroup(String name, String group) {
+        PermissionUser user = this.permissionManager.getUser(name);
+        if(user == null){
+            return false;
+        }
+        
+        return user.inGroup(group);
+    }    
 
     protected boolean checkInGroup(String groupName, PermissionGroup[] groupArray, boolean recursive) {
         for (PermissionGroup group : groupArray) {
