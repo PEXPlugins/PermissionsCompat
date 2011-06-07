@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
@@ -79,7 +78,7 @@ public class P2Entity extends PermissionEntity {
         }
         
         // Don't add permission if entity already have this permission
-        if (!this.has("modifyworld.blocks.place", world) && this.getOption("build", world, false).equals("true")) {
+        if (this.getOption("build", world, false).equals("true")) {
             permissions.add("modifyworld.*");
         }
 
