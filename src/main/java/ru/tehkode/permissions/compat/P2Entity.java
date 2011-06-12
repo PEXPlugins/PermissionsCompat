@@ -46,12 +46,12 @@ public class P2Entity extends PermissionEntity {
 
     @Override
     public String getPrefix() {
-        return this.getOption("prefix", this.backend.getDefaultWorld(), false);
+        return this.getOption("prefix", this.backend.getDefaultWorld());
     }
 
     @Override
     public String getSuffix() {
-        return this.getOption("suffix", this.backend.getDefaultWorld(), false);
+        return this.getOption("suffix", this.backend.getDefaultWorld());
     }
 
     public ConfigurationNode getNode(String world) {
@@ -79,7 +79,7 @@ public class P2Entity extends PermissionEntity {
         }
         
         // Don't add permission if entity already have this permission
-        if (this.getOption("build", world, false).equals("true")) {
+        if (this.getOption("build", world).equals("true")) {
             permissions.add("modifyworld.*");
         }
 
@@ -121,14 +121,14 @@ public class P2Entity extends PermissionEntity {
     }
 
     @Override
-    public String getOption(String permission, String world, boolean inheritance) {
+    public String getOption(String permission, String world) {
         Object value = null;
 
         if (world != null && !world.isEmpty()) {
             value = this.getNode(world).getProperty("info." + permission);
         }
 
-        if ((inheritance && value == null) || (world == null || world.isEmpty())) {
+        if (value == null || (world == null || world.isEmpty())) {
             value = this.getDefaultWorldNode().getProperty("info." + permission);
         }
 

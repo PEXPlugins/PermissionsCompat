@@ -37,7 +37,7 @@ public class P2User extends PermissionUser {
 
     public void load(String world, ConfigurationNode node) {
         this.entity.load(world, node);
-        
+
         this.prefix = this.entity.getPrefix();
         this.suffix = this.entity.getSuffix();
     }
@@ -59,7 +59,7 @@ public class P2User extends PermissionUser {
     }
 
     @Override
-    public void setGroups(PermissionGroup[] pgs) {
+    public void setGroups(String[] pgs) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat backend is read-only!");
     }
 
@@ -112,8 +112,8 @@ public class P2User extends PermissionUser {
     }
 
     @Override
-    public String getOption(String permission, String world, boolean inheritance) {
-        return entity.getOption(permission, world, inheritance);
+    public String getOption(String permission, String world) {
+        return entity.getOption(permission, world);
     }
 
     @Override

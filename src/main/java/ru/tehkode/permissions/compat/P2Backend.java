@@ -126,7 +126,7 @@ public class P2Backend extends PermissionBackend {
     protected void parseWorld(String worldName, Configuration world) {
         // Load groups
         Map<String, ConfigurationNode> worldGroups = world.getNodesMap("groups");
-        
+
         if (worldGroups != null) {
             for (Map.Entry<String, ConfigurationNode> entry : worldGroups.entrySet()) {
                 P2Group group = (P2Group) this.getGroup(entry.getKey());
@@ -154,6 +154,22 @@ public class P2Backend extends PermissionBackend {
             this.defaultWorld = Bukkit.getServer().getWorlds().get(0).getName();
         }
         return this.defaultWorld;
+    }
+
+    @Override
+    public String[] getWorldInheritance(String world) {
+        if (!worldPermissions.containsKey(world)) {
+            return new String[0];
+        }
+
+        ConfigurationNode worldNode = this.worldPermissions.get(world);
+        String worldsCopy = worldNode.getString("plugin.permissions.copies", null);
+        if (worldsCopy == null || worldsCopy.equalsIgnoreCase(this.defaultWorld)) {
+            return new String[0];
+        }
+
+        return new String[]{worldsCopy};
+
     }
 
     @Override

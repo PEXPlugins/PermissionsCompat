@@ -72,7 +72,7 @@ public class P2Group extends PermissionGroup {
     }
 
     @Override
-    public void setParentGroups(PermissionGroup[] pgs) {
+    public void setParentGroups(String[] pgs) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
     }
 
@@ -107,8 +107,8 @@ public class P2Group extends PermissionGroup {
     }
 
     @Override
-    public String getOption(String permission, String world, boolean inheritance) {
-        return entity.getOption(permission, world, inheritance);
+    public String getOption(String permission, String world) {
+        return entity.getOption(permission, world);
     }
 
     @Override
