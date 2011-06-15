@@ -44,7 +44,10 @@ public class P2Backend extends PermissionBackend {
 
     public P2Backend(PermissionManager manager, Configuration config) {
         super(manager, config);
+    }
 
+    @Override
+    public void initialize() {
         this.configDir = new File(config.getString("permissions.backends.yeti.directory", "plugins/Permissions/"));
 
         this.loadPermissions(this.configDir);

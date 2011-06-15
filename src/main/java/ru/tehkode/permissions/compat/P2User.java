@@ -20,7 +20,6 @@ package ru.tehkode.permissions.compat;
 
 import java.util.Map;
 import java.util.logging.Logger;
-import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.config.ConfigurationNode;
