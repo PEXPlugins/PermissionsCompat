@@ -18,20 +18,19 @@
  */
 package ru.tehkode.permissions.compat;
 
-import java.util.Map;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.ProxyPermissionUser;
 import ru.tehkode.permissions.config.ConfigurationNode;
 
-public class P2User extends PermissionUser {
+public class P2User extends ProxyPermissionUser {
 
     protected P2Entity entity;
 
     public P2User(String playerName, PermissionManager manager, P2Backend backend) {
-        super(playerName, manager);
+        super(new P2Entity(playerName, manager, backend));
 
-        this.entity = new P2Entity(prefix, manager, backend);
+        this.entity = (P2Entity)this.backendEntity;
     }
 
     public void load(String world, ConfigurationNode node) {
@@ -52,81 +51,9 @@ public class P2User extends PermissionUser {
         return new String[0];
     }
 
-    @Override
-    public String[] getOwnPermissions(String world) {
-        return this.entity.getPermissions(world);
-    }
 
     @Override
     public void setGroups(String[] pgs) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat backend is read-only!");
-    }
-
-    @Override
-    public void setPermissions(String[] strings, String string) {
-        entity.setPermissions(strings, string);
-    }
-
-    @Override
-    public void setOption(String string, String string1, String string2) {
-        entity.setOption(string, string1, string2);
-    }
-
-    @Override
-    public void save() {
-        entity.save();
-    }
-
-    @Override
-    public void removePermission(String string, String string1) {
-        entity.removePermission(string, string1);
-    }
-
-    @Override
-    public void remove() {
-        entity.remove();
-    }
-
-    @Override
-    public String getSuffix() {
-        return entity.getSuffix();
-    }
-
-    @Override
-    public String getPrefix() {
-        return entity.getPrefix();
-    }
-
-    public String[] getPermissions(String world, boolean inheritance) {
-        return entity.getPermissions(world, inheritance);
-    }
-
-    public Map<String, String> getOptions(String world, boolean inheritance) {
-        return entity.getOptions(world, inheritance);
-    }
-
-    @Override
-    public Map<String, String> getOptions(String world) {
-        return entity.getOptions(world);
-    }
-
-    @Override
-    public String getOption(String permission, String world) {
-        return entity.getOption(permission, world);
-    }
-
-    @Override
-    public Map<String, String[]> getAllPermissions() {
-        return entity.getAllPermissions();
-    }
-
-    @Override
-    public Map<String, Map<String, String>> getAllOptions() {
-        return entity.getAllOptions();
-    }
-
-    @Override
-    public void addPermission(String string, String string1) {
-        entity.addPermission(string, string1);
     }
 }
