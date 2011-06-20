@@ -121,7 +121,7 @@ public class P2Entity extends PermissionEntity {
     }
 
     @Override
-    public String getOption(String permission, String world) {
+    public String getOption(String permission, String world, String defaultValue) {
         Object value = null;
 
         if (world != null && !world.isEmpty()) {
@@ -132,8 +132,8 @@ public class P2Entity extends PermissionEntity {
             value = this.getDefaultWorldNode().getProperty("info." + permission);
         }
 
-        if (value == null) { // NPE Safety
-            value = "";
+        if (value == null) {
+            value = defaultValue;
         }
 
         return value.toString();
