@@ -97,7 +97,7 @@ public class P2Backend extends PermissionBackend {
 
     protected final void loadPermissions(File dir) {
         if (!dir.exists()) {
-            throw new RuntimeException("Specified directory aren't exist. Check \"permissions.backends.yeti.directory\" param.");
+            throw new RuntimeException("Specified directory doesn't exist. Check \"permissions.backends.yeti.directory\" param.");
         }
 
         this.worldPermissions = new HashMap<String, Configuration>();
