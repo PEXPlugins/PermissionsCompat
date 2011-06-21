@@ -49,11 +49,11 @@ public class P2Group extends ProxyPermissionGroup {
 
     @Override
     protected void removeGroup() {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void setParentGroups(String[] pgs) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 }
