@@ -177,31 +177,31 @@ public class P2Entity extends PermissionEntity {
 
     @Override
     public void addPermission(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void remove() {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void removePermission(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void save() {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void setOption(String string, String string1, String string2) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     @Override
     public void setPermissions(String[] strings, String string) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat are read-only");
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 }
