@@ -48,7 +48,7 @@ public class P2Backend extends PermissionBackend {
 
     @Override
     public void initialize() {
-        this.configDir = new File(config.getString("permissions.backends.yeti.directory", "plugins/Permissions/"));
+        this.configDir = new File(config.getString("permissions.backends.p2compat.directory", "plugins/Permissions/"));
 
         this.loadPermissions(this.configDir);
     }
@@ -97,7 +97,7 @@ public class P2Backend extends PermissionBackend {
 
     protected final void loadPermissions(File dir) {
         if (!dir.exists()) {
-            throw new RuntimeException("Specified directory doesn't exist. Check \"permissions.backends.yeti.directory\" param.");
+            throw new RuntimeException("Specified directory doesn't exist. Check \"permissions.backends.p2compat.directory\" param.");
         }
 
         this.worldPermissions = new HashMap<String, Configuration>();
@@ -176,7 +176,12 @@ public class P2Backend extends PermissionBackend {
     }
 
     @Override
+    public void setWorldInheritance(String string, String[] strings) {
+        Logger.getLogger("Minecraft").severe("P2Compat is read-only");
+    }
+
+    @Override
     public void dumpData(OutputStreamWriter writer) throws IOException {
-        Logger.getLogger("Minecraft").severe("P2Compat Backend is read-only");
+        Logger.getLogger("Minecraft").severe("P2Compat is read-only");
     }
 }
