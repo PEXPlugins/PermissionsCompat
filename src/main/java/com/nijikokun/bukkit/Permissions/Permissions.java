@@ -35,6 +35,8 @@ public class Permissions extends JavaPlugin {
 
     public static Plugin instance = null;
     public static PermissionHandler Security;
+    
+    public static String version = "2.7.2";
 
     public Permissions() {
         super();
