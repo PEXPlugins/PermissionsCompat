@@ -33,7 +33,7 @@ import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.config.Configuration;
 import ru.tehkode.permissions.config.ConfigurationNode;
 
-public class P2Backend extends PermissionBackend {
+public class P2Backend extends PermissionBackend implements FilenameFilter {
 
     protected Map<String, Configuration> worldPermissions = new HashMap<String, Configuration>();
     protected String defaultWorld = "";
@@ -105,13 +105,7 @@ public class P2Backend extends PermissionBackend {
         this.groups.clear();
         this.defaultGroup = null;
 
-        File[] configFiles = dir.listFiles(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".yml");
-            }
-        });
+        File[] configFiles = dir.listFiles(this);
 
         for (File configFile : configFiles) {
             String worldName = configFile.getName().replace(".yml", "");
@@ -124,6 +118,11 @@ public class P2Backend extends PermissionBackend {
 
             this.parseWorld(worldName, world);
         }
+    }
+
+    @Override
+    public boolean accept(File dir, String name) {
+        return name.endsWith(".yml");
     }
 
     protected void parseWorld(String worldName, Configuration world) {
