@@ -5,16 +5,6 @@
     <formats>
         <format>zip</format>
     </formats>
-    <fileSets>
-        <fileSet>
-            <directory>${project.basedir}</directory>
-            <outputDirectory>/</outputDirectory>
-            <includes>
-                <include>README*</include>
-                <include>CHANGELOG*</include>
-            </includes>
-        </fileSet>
-    </fileSets>
     <files>
         <file>
             <source>${project.build.directory}/Permissions.jar</source>
