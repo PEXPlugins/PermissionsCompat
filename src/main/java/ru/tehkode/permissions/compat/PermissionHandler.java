@@ -19,6 +19,11 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
     protected PermissionManager permissionManager;
 
     public PermissionHandler(PermissionManager permissionManager) {
+        if(permissionManager == null){
+            throw new RuntimeException("PermissionManager not found!");
+        }
+        
+        
         this.permissionManager = permissionManager;
     }
 
