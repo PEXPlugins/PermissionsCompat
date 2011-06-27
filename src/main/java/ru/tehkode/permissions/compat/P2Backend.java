@@ -59,6 +59,11 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     }
 
     @Override
+    public void setDefaultGroup(PermissionGroup pg) {
+        Logger.getLogger("Minecraft").severe("P2Compat is read-only");
+    }
+    
+    @Override
     public PermissionGroup getGroup(String string) {
         if (!this.groups.containsKey(string)) {
             this.groups.put(string, new P2Group(string, manager, this));
