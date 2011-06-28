@@ -18,6 +18,7 @@
  */
 package ru.tehkode.permissions.compat;
 
+import java.util.List;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.ProxyPermissionUser;
@@ -30,7 +31,7 @@ public class P2User extends ProxyPermissionUser {
     public P2User(String playerName, PermissionManager manager, P2Backend backend) {
         super(new P2Entity(playerName, manager, backend));
 
-        this.entity = (P2Entity)this.backendEntity;
+        this.entity = (P2Entity) this.backendEntity;
     }
 
     public void load(String world, ConfigurationNode node) {
@@ -42,15 +43,21 @@ public class P2User extends ProxyPermissionUser {
 
     @Override
     protected String[] getGroupsNamesImpl() {
-        String groupName = this.entity.getDefaultWorldNode().getString("group", null);
 
-        if (groupName != null) {
-            return new String[]{groupName};
+        // Permissions 3.x
+        Object groups = this.entity.getDefaultWorldNode().getProperty("groups");
+        if (groups instanceof List) {
+            return ((List<String>) groups).toArray(new String[0]);
+        }
+
+        // Permissions 2.x
+        groups = this.entity.getDefaultWorldNode().getString("group");
+        if (groups instanceof String) {
+            return new String[]{(String) groups};
         }
 
         return new String[0];
     }
-
 
     @Override
     public void setGroups(String[] pgs) {
