@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
@@ -32,7 +31,7 @@ import ru.tehkode.permissions.config.ConfigurationNode;
 public class P2Entity extends PermissionEntity {
 
     protected P2Backend backend;
-    protected Map<String, ConfigurationNode> worldNodes = new ConcurrentHashMap<String, ConfigurationNode>();
+    protected Map<String, ConfigurationNode> worldNodes = new HashMap<String, ConfigurationNode>();
 
     public P2Entity(String name, PermissionManager manager, P2Backend backend) {
         super(name, manager);
