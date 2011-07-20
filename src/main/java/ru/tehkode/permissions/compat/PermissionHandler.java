@@ -3,7 +3,6 @@ package ru.tehkode.permissions.compat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 import ru.tehkode.permissions.PermissionGroup;

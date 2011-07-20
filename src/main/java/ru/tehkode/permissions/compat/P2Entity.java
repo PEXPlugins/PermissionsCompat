@@ -195,7 +195,7 @@ public class P2Entity extends PermissionEntity {
     }
 
     @Override
-    public void setOption(String string, String string1, String string2) {
+    public void setOption(String option, String value, String world) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
