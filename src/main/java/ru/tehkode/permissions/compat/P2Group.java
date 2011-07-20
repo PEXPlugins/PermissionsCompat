@@ -36,14 +36,11 @@ public class P2Group extends ProxyPermissionGroup {
 
     public void load(String world, ConfigurationNode node) {
         this.entity.load(world, node);
-
-        this.prefix = this.entity.getPrefix();
-        this.suffix = this.entity.getSuffix();
     }
 
     @Override
-    protected String[] getParentGroupsNamesImpl() {
-        ConfigurationNode node = this.entity.getDefaultWorldNode();
+    protected String[] getParentGroupsNamesImpl(String worldName) {
+        ConfigurationNode node = this.entity.getNode(worldName);;
         return node.getStringList("inheritance", new LinkedList<String>()).toArray(new String[0]);
     }
 
@@ -53,7 +50,7 @@ public class P2Group extends ProxyPermissionGroup {
     }
 
     @Override
-    public void setParentGroups(String[] pgs) {
+    public void setParentGroups(String[] pgs, String worldName) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 }

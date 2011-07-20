@@ -44,13 +44,28 @@ public class P2Entity extends PermissionEntity {
     }
 
     @Override
-    public String getPrefix() {
-        return this.getOption("prefix", this.backend.getDefaultWorld());
+    public String[] getWorlds() {
+        return this.worldNodes.keySet().toArray(new String[0]);
     }
 
     @Override
-    public String getSuffix() {
-        return this.getOption("suffix", this.backend.getDefaultWorld());
+    public String getPrefix(String worldName) {
+        return this.getOption("prefix", worldName);
+    }
+
+    @Override
+    public String getSuffix(String worldName) {
+        return this.getOption("suffix", worldName);
+    }
+
+    @Override
+    public void setPrefix(String string, String string1) {
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+    }
+
+    @Override
+    public void setSuffix(String string, String string1) {
+        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
     public ConfigurationNode getNode(String world) {
@@ -76,7 +91,7 @@ public class P2Entity extends PermissionEntity {
         if ((inheritance && !this.backend.getDefaultWorld().equals(world) || (world == null || world.isEmpty()))) {
             permissions.addAll(this.getDefaultWorldNode().getStringList("permissions", new LinkedList<String>()));
         }
-        
+
         // Don't add permission if entity already have this permission
         if (this.getOption("build", world).equals("true")) {
             permissions.add("modifyworld.*");
@@ -112,7 +127,7 @@ public class P2Entity extends PermissionEntity {
             if (world.equals(this.backend.getDefaultWorld())) {
                 world = "";
             }
-            
+
             permissions.put(world, this.getPermissions(world, false));
         }
 

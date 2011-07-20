@@ -36,22 +36,24 @@ public class P2User extends ProxyPermissionUser {
 
     public void load(String world, ConfigurationNode node) {
         this.entity.load(world, node);
-
-        this.prefix = this.entity.getPrefix();
-        this.suffix = this.entity.getSuffix();
     }
 
     @Override
-    protected String[] getGroupsNamesImpl() {
+    protected String[] getGroupsNamesImpl(String worldName) {
+
+        ConfigurationNode node = this.entity.getNode(worldName);
+        if (node == null) {
+            return new String[0];
+        }
 
         // Permissions 3.x
-        Object groups = this.entity.getDefaultWorldNode().getProperty("groups");
+        Object groups = node.getProperty("groups");
         if (groups instanceof List) {
             return ((List<String>) groups).toArray(new String[0]);
         }
 
         // Permissions 2.x
-        groups = this.entity.getDefaultWorldNode().getString("group");
+        groups = node.getString("group");
         if (groups instanceof String) {
             return new String[]{(String) groups};
         }
@@ -60,7 +62,7 @@ public class P2User extends ProxyPermissionUser {
     }
 
     @Override
-    public void setGroups(String[] pgs) {
+    public void setGroups(String[] pgs, String worldName) {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat backend is read-only!");
     }
 }
