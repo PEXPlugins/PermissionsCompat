@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
-import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 
@@ -115,7 +114,12 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean inGroup(String world, String userName, String groupName) {
-        return this.checkInGroup(groupName, permissionManager.getUser(userName).getGroups(), true);
+        PermissionUser user = this.permissionManager.getUser(userName);
+        if(user == null){
+            return false;
+        }
+        
+        return user.inGroup(groupName, world, true);
     }
 
     @Override
@@ -125,22 +129,9 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
             return false;
         }
         
-        return user.inGroup(group);
+        return user.inGroup(group, true);
     }    
 
-    protected boolean checkInGroup(String groupName, PermissionGroup[] groupArray, boolean recursive) {
-        for (PermissionGroup group : groupArray) {
-            if (group.getName().toLowerCase().equals(groupName.toLowerCase())) {
-                return true;
-            }
-
-            if (recursive && checkInGroup(groupName, group.getParentGroups(), recursive)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Checks to see if a player is in a single group.
@@ -153,7 +144,12 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public boolean inSingleGroup(String world, String userName, String groupName) {
-        return this.checkInGroup(groupName, permissionManager.getUser(userName).getGroups(), false);
+        PermissionUser user = this.permissionManager.getUser(userName);
+        if(user == null){
+            return false;
+        }
+        
+        return user.inGroup(groupName, world, false);
     }
 
     /**
@@ -167,7 +163,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getGroupPrefix(String world, String groupName) {
-        return this.permissionManager.getGroup(groupName).getPrefix();
+        return this.permissionManager.getGroup(groupName).getPrefix(world);
     }
 
     /**
@@ -181,7 +177,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String getGroupSuffix(String world, String groupName) {
-        return this.permissionManager.getGroup(groupName).getSuffix();
+        return this.permissionManager.getGroup(groupName).getSuffix(world);
     }
 
     /**
