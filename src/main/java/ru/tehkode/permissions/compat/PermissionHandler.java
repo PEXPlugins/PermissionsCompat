@@ -424,7 +424,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
 
     @Override
     public boolean checkWorld(String world) {
-        throw new UnsupportedOperationException("Unsupported (or deprecated) operation, sorry dude.");
+        return true;
     }
 
     @Override
