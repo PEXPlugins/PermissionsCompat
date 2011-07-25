@@ -124,6 +124,10 @@ public class P2Entity extends PermissionEntity {
         Map<String, String[]> permissions = new HashMap<String, String[]>();
 
         for (String world : this.worldNodes.keySet()) {
+            if (world == null) {
+                continue;
+            }
+
             if (world.equals(this.backend.getDefaultWorld())) {
                 world = "";
             }
