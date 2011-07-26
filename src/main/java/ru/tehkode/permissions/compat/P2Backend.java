@@ -38,7 +38,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     protected Map<String, Configuration> worldPermissions = new HashMap<String, Configuration>();
     protected String defaultWorld = "";
     protected File configDir;
-    protected P2Group defaultGroup;
+    protected Map<String, P2Group> defaultGroups = new HashMap<String, P2Group>();
     protected Map<String, P2Group> groups = new HashMap<String, P2Group>();
     protected Map<String, P2User> users = new HashMap<String, P2User>();
 
@@ -54,12 +54,12 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     }
 
     @Override
-    public PermissionGroup getDefaultGroup() {
-        return this.defaultGroup;
+    public PermissionGroup getDefaultGroup(String worldName) {
+        return this.defaultGroups.get(worldName);
     }
 
     @Override
-    public void setDefaultGroup(PermissionGroup pg) {
+    public void setDefaultGroup(PermissionGroup pg, String worldName) {
         Logger.getLogger("Minecraft").severe("P2Compat is read-only");
     }
     
@@ -108,7 +108,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
         this.worldPermissions = new HashMap<String, Configuration>();
         this.users.clear();
         this.groups.clear();
-        this.defaultGroup = null;
+        this.defaultGroups.clear();
 
         File[] configFiles = dir.listFiles(this);
 
@@ -139,8 +139,8 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
                 P2Group group = (P2Group) this.getGroup(entry.getKey());
                 group.load(worldName, entry.getValue());
 
-                if (this.getDefaultWorldName().equals(worldName) && entry.getValue().getBoolean("default", false)) {
-                    this.defaultGroup = group;
+                if (entry.getValue().getBoolean("default", false)) {
+                    this.defaultGroups.put(worldName, group);
                 }
             }
         }
