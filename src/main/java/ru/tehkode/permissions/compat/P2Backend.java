@@ -87,7 +87,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     }
 
     @Override
-    public PermissionUser[] getUsers() {
+    public PermissionUser[] getRegisteredUsers() {
         return this.users.values().toArray(new PermissionUser[0]);
     }
 
