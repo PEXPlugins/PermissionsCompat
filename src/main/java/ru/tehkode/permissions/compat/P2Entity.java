@@ -156,7 +156,7 @@ public class P2Entity extends PermissionEntity {
         }
 
         if (value == null) {
-            value = defaultValue;
+            return defaultValue;
         }
 
         return value.toString();
