@@ -68,12 +68,16 @@ public class P2Entity extends PermissionEntity {
         Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
     }
 
-    public ConfigurationNode getNode(String world) {
-        if (!this.worldNodes.containsKey(world)) {
-            this.worldNodes.put(world, Configuration.getEmptyNode());
+    public ConfigurationNode getNode(String worldName) {
+        if (worldName == null){
+            return this.getDefaultWorldNode();
+        }
+        
+        if (!this.worldNodes.containsKey(worldName)) {
+            this.worldNodes.put(worldName, Configuration.getEmptyNode());
         }
 
-        return this.worldNodes.get(world);
+        return this.worldNodes.get(worldName);
     }
 
     public ConfigurationNode getDefaultWorldNode() {
@@ -108,11 +112,12 @@ public class P2Entity extends PermissionEntity {
     @Override
     public Map<String, Map<String, String>> getAllOptions() {
         Map<String, Map<String, String>> allOptions = new HashMap<String, Map<String, String>>();
-
+        
         for (String world : this.worldNodes.keySet()) {
-            if (world.equals(this.backend.getDefaultWorld())) {
+            if (this.backend.getDefaultWorld().equals(world)) {
                 world = "";
             }
+            
             allOptions.put(world, this.getOptions(world, false));
         }
 

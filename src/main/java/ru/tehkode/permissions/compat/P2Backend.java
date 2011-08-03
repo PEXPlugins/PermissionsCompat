@@ -55,14 +55,14 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
 
     @Override
     public PermissionGroup getDefaultGroup(String worldName) {
-        return this.defaultGroups.get(worldName);
+        return this.defaultGroups.get(worldName != null ? worldName : "@common");
     }
 
     @Override
     public void setDefaultGroup(PermissionGroup pg, String worldName) {
         Logger.getLogger("Minecraft").severe("P2Compat is read-only");
     }
-    
+
     @Override
     public PermissionGroup getGroup(String string) {
         if (!this.groups.containsKey(string)) {
@@ -97,7 +97,11 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     }
 
     public String getDefaultWorld() {
-        return defaultWorld;
+        if (this.defaultWorld.isEmpty()) {
+            this.defaultWorld = Bukkit.getServer().getWorlds().get(0).getName();
+        }
+        
+        return this.defaultWorld;
     }
 
     protected final void loadPermissions(File dir) {
@@ -144,6 +148,10 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
                 }
             }
         }
+        
+        if(this.getDefaultWorld().equals(worldName)){
+            this.defaultGroups.put("@common", this.defaultGroups.get(worldName));
+        }
 
         // Load users
         Map<String, ConfigurationNode> userGroups = world.getNodesMap("users");
@@ -154,13 +162,6 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
                 user.load(worldName, entry.getValue());
             }
         }
-    }
-
-    private String getDefaultWorldName() {
-        if (this.defaultWorld.isEmpty()) {
-            this.defaultWorld = Bukkit.getServer().getWorlds().get(0).getName();
-        }
-        return this.defaultWorld;
     }
 
     @Override
