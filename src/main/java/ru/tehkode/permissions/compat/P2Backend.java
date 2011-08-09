@@ -55,7 +55,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
 
     @Override
     public PermissionGroup getDefaultGroup(String worldName) {
-        return this.defaultGroups.get(worldName != null ? worldName : "@common");
+        return this.defaultGroups.get(worldName);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
         }
         
         if(this.getDefaultWorld().equals(worldName)){
-            this.defaultGroups.put("@common", this.defaultGroups.get(worldName));
+            this.defaultGroups.put(null, this.defaultGroups.get(worldName));
         }
 
         // Load users
