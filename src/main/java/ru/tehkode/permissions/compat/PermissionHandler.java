@@ -101,7 +101,7 @@ public class PermissionHandler extends com.nijiko.permissions.PermissionHandler 
      */
     @Override
     public String[] getGroups(String world, String userName) {
-        return this.permissionManager.getUser(userName).getGroupsNames();
+        return this.permissionManager.getUser(userName).getGroupsNames(world);
     }
 
     /**
