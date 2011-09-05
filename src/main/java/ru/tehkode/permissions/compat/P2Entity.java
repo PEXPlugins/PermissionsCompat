@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
@@ -45,7 +46,13 @@ public class P2Entity extends PermissionEntity {
 
     @Override
     public String[] getWorlds() {
-        return this.worldNodes.keySet().toArray(new String[0]);
+		Set<String> worlds = this.worldNodes.keySet(); 
+		
+		worlds.remove(this.backend.getDefaultWorld());
+		worlds.remove(null); // dirty hack
+		worlds.remove("");
+		
+        return worlds.toArray(new String[0]);
     }
 
     @Override
