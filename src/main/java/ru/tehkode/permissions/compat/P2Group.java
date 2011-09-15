@@ -18,7 +18,9 @@
  */
 package ru.tehkode.permissions.compat;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.ProxyPermissionGroup;
@@ -27,21 +29,30 @@ import ru.tehkode.permissions.config.ConfigurationNode;
 public class P2Group extends ProxyPermissionGroup {
 
     protected P2Entity entity;
+	protected P2Backend backend;
+	
+	protected Map<String, String[]> entityInheritance = new HashMap<String, String[]>();
 
     public P2Group(String groupName, PermissionManager manager, P2Backend backend) {
         super(new P2Entity(groupName, manager, backend));
 
         this.entity = (P2Entity) this.backendEntity;
+		this.backend = backend;
     }
 
     public void load(String world, ConfigurationNode node) {
         this.entity.load(world, node);
+				
+		this.entityInheritance.put(world, node.getStringList("inheritance", new LinkedList<String>()).toArray(new String[0]));
     }
 
     @Override
     protected String[] getParentGroupsNamesImpl(String worldName) {
-        ConfigurationNode node = this.entity.getNode(worldName);;
-        return node.getStringList("inheritance", new LinkedList<String>()).toArray(new String[0]);
+		if(this.entityInheritance.containsKey(worldName)){
+			return this.entityInheritance.get(worldName);
+		}
+		
+        return new String[0];
     }
 
     @Override

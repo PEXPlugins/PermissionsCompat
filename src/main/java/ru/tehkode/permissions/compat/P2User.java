@@ -18,7 +18,9 @@
  */
 package ru.tehkode.permissions.compat;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.ProxyPermissionUser;
@@ -26,43 +28,53 @@ import ru.tehkode.permissions.config.ConfigurationNode;
 
 public class P2User extends ProxyPermissionUser {
 
-    protected P2Entity entity;
+	protected P2Entity entity;
+	protected P2Backend backend;
+	protected Map<String, String[]> entityInheritance = new HashMap<String, String[]>();
 
-    public P2User(String playerName, PermissionManager manager, P2Backend backend) {
-        super(new P2Entity(playerName, manager, backend));
+	public P2User(String playerName, PermissionManager manager, P2Backend backend) {
+		super(new P2Entity(playerName, manager, backend));
 
-        this.entity = (P2Entity) this.backendEntity;
-    }
+		this.entity = (P2Entity) this.backendEntity;
+	}
 
-    public void load(String world, ConfigurationNode node) {
-        this.entity.load(world, node);
-    }
+	public void load(String world, ConfigurationNode node) {
+		this.entity.load(world, node);
 
-    @Override
-    protected String[] getGroupsNamesImpl(String worldName) {
+		this.entityInheritance.put(world, this.getNodeGroups(node));
+	}
 
-        ConfigurationNode node = this.entity.getNode(worldName);
-        if (node == null) {
-            return new String[0];
-        }
+	@Override
+	protected String[] getGroupsNamesImpl(String worldName) {
+		if (this.entityInheritance.containsKey(worldName)) {
+			return this.entityInheritance.get(worldName);
+		}
 
-        // Permissions 3.x
-        Object groups = node.getProperty("groups");
-        if (groups instanceof List) {
-            return ((List<String>) groups).toArray(new String[0]);
-        }
+		return new String[0];
+	}
 
-        // Permissions 2.x
-        groups = node.getString("group");
-        if (groups instanceof String) {
-            return new String[]{(String) groups};
-        }
+	protected String[] getNodeGroups(ConfigurationNode node) {
+		if (node == null) {
+			return new String[0];
+		}
 
-        return new String[0];
-    }
+		// Permissions 3.x
+		Object groups = node.getProperty("groups");
+		if (groups instanceof List) {
+			return ((List<String>) groups).toArray(new String[0]);
+		}
 
-    @Override
-    public void setGroups(String[] pgs, String worldName) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat backend is read-only!");
-    }
+		// Permissions 2.x
+		groups = node.getString("group");
+		if (groups instanceof String) {
+			return new String[]{(String) groups};
+		}
+
+		return new String[0];
+	}
+
+	@Override
+	public void setGroups(String[] pgs, String worldName) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat backend is read-only!");
+	}
 }

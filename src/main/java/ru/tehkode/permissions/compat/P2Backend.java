@@ -135,6 +135,11 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
     }
 
     protected void parseWorld(String worldName, Configuration world) {
+		
+		if(worldName.equals(this.getDefaultWorld())){
+			worldName = null;
+		}
+		
         // Load groups
         Map<String, ConfigurationNode> worldGroups = world.getNodesMap("groups");
 
@@ -147,10 +152,6 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
                     this.defaultGroups.put(worldName, group);
                 }
             }
-        }
-        
-        if(this.getDefaultWorld().equals(worldName)){
-            this.defaultGroups.put(null, this.defaultGroups.get(worldName));
         }
 
         // Load users

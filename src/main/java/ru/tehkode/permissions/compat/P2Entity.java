@@ -18,220 +18,170 @@
  */
 package ru.tehkode.permissions.compat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.config.Configuration;
 import ru.tehkode.permissions.config.ConfigurationNode;
 
 public class P2Entity extends PermissionEntity {
 
-    protected P2Backend backend;
-    protected Map<String, ConfigurationNode> worldNodes = new HashMap<String, ConfigurationNode>();
+	protected P2Backend backend;
+	protected Map<String, Map<String, String>> entityOptions = new HashMap<String, Map<String, String>>();
+	protected Map<String, String[]> entityPermissions = new HashMap<String, String[]>();
 
-    public P2Entity(String name, PermissionManager manager, P2Backend backend) {
-        super(name, manager);
+	public P2Entity(String name, PermissionManager manager, P2Backend backend) {
+		super(name, manager);
 
-        this.backend = backend;
-    }
+		this.backend = backend;
+	}
 
-    public void load(String world, ConfigurationNode node) {
-        this.worldNodes.put(world, node);
-    }
-
-    @Override
-    public String[] getWorlds() {
-		Set<String> worlds = this.worldNodes.keySet(); 
+	public void load(String world, ConfigurationNode node) {
+		if(node == null){
+			return;
+		}
+				
+		// load permissions (i fucking hate it!)
+		this.entityPermissions.put(world, node.getStringList("permissions", new ArrayList<String>()).toArray(new String[0]));
 		
-		worlds.remove(this.backend.getDefaultWorld());
-		worlds.remove(null); // dirty hack
-		worlds.remove("");
+		// load options
+		Object infoNodes = node.getProperty("info");
+		if(infoNodes instanceof Map){
+			this.entityOptions.put(world, this.collectInfoNodes(null, (Map)infoNodes, new HashMap<String, String>()));
+		}
+	}
+
+	@Override
+	public String[] getWorlds() {
+		Set<String> worlds = new HashSet<String>();
 		
-        return worlds.toArray(new String[0]);
-    }
+		worlds.addAll(this.entityPermissions.keySet());
+		worlds.addAll(this.entityOptions.keySet());
+		worlds.remove(null);
+		
+		return worlds.toArray(new String[0]);
+	}
 
-    @Override
-    public String getPrefix(String worldName) {
-        return this.getOption("prefix", worldName);
-    }
+	@Override
+	public String getPrefix(String worldName) {
+		return this.getOption("prefix", worldName);
+	}
 
-    @Override
-    public String getSuffix(String worldName) {
-        return this.getOption("suffix", worldName);
-    }
+	@Override
+	public String getSuffix(String worldName) {
+		return this.getOption("suffix", worldName);
+	}
 
-    @Override
-    public void setPrefix(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
+	@Override
+	public void setPrefix(String string, String string1) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-    @Override
-    public void setSuffix(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
+	@Override
+	public void setSuffix(String string, String string1) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-    public ConfigurationNode getNode(String worldName) {
-        if (worldName == null){
-            return this.getDefaultWorldNode();
-        }
-        
-        if (!this.worldNodes.containsKey(worldName)) {
-            this.worldNodes.put(worldName, Configuration.getEmptyNode());
-        }
+	@Override
+	public String[] getPermissions(String world) {		
+		return this.entityPermissions.get(world);
+	}
 
-        return this.worldNodes.get(worldName);
-    }
+	@Override
+	public Map<String, Map<String, String>> getAllOptions() {
+		return this.entityOptions;
+	}
 
-    public ConfigurationNode getDefaultWorldNode() {
-        return this.getNode(this.backend.getDefaultWorld());
-    }
+	@Override
+	public Map<String, String[]> getAllPermissions() {
+		return this.entityPermissions;
+	}
 
-    public String[] getPermissions(String world, boolean inheritance) {
-        List<String> permissions = new LinkedList<String>();
+	@Override
+	public Map<String, String> getOptions(String world) {
+		Map<String, String> options = new HashMap<String, String>();
+		
+		if(this.entityOptions.containsKey(null)){
+			options.putAll(this.entityOptions.get(null));
+		}
+		
+		if(this.entityOptions.containsKey(world)){
+			options.putAll(this.entityOptions.get(world));
+		}
+		
+		return options;
+	}
 
-        if (world != null && !world.isEmpty()) {
-            ConfigurationNode worldNode = this.getNode(world);
-            permissions.addAll(worldNode.getStringList("permissions", new LinkedList<String>()));
-        }
+	@Override
+	public String getOption(String permission, String world, String defaultValue) {
+		String value = null;
 
-        if ((inheritance && !this.backend.getDefaultWorld().equals(world) || (world == null || world.isEmpty()))) {
-            permissions.addAll(this.getDefaultWorldNode().getStringList("permissions", new LinkedList<String>()));
-        }
+		if (world != null && !world.isEmpty() && this.entityOptions.containsKey(world)) {
+			value = this.entityOptions.get(world).get(permission);
+			if(value != null){
+				return value;
+			}
+		}
 
-        // Don't add permission if entity already have this permission
-        if (this.getOption("build", world).equals("true")) {
-            permissions.add("modifyworld.*");
-        }
+		if(this.entityOptions.containsKey(null)){ // have common options
+			value = this.entityOptions.get(null).get(permission);
+			if (value != null){
+				return value;
+			}
+		}
 
-        return permissions.toArray(new String[0]);
-    }
 
-    @Override
-    public String[] getPermissions(String world) {
-        return this.getPermissions(world, true);
-    }
+		return defaultValue;
+	}
+	
+	protected Map<String, String> collectInfoNodes(String key, Map<String, Object> item, Map<String, String> collection){
+		for(Map.Entry<String, Object> entry : item.entrySet()){
+			Object value = entry.getValue();
+			String itemKey = key != null ? key + "." + entry.getKey() : entry.getKey();
+			
+			if(value instanceof String){
+				collection.put(itemKey, (String)value);
+			} else if (value instanceof Map) {
+				collectInfoNodes(itemKey, (Map)value, collection);
+			} else {
+				collection.put(itemKey, value.toString());
+			}
+		}
+		
+		return collection;
+	}
 
-    @Override
-    public Map<String, Map<String, String>> getAllOptions() {
-        Map<String, Map<String, String>> allOptions = new HashMap<String, Map<String, String>>();
-        
-        for (String world : this.worldNodes.keySet()) {
-            if (this.backend.getDefaultWorld().equals(world)) {
-                world = "";
-            }
-            
-            allOptions.put(world, this.getOptions(world, false));
-        }
+	@Override
+	public void addPermission(String string, String string1) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-        return allOptions;
-    }
+	@Override
+	public void remove() {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-    @Override
-    public Map<String, String[]> getAllPermissions() {
-        Map<String, String[]> permissions = new HashMap<String, String[]>();
+	@Override
+	public void removePermission(String string, String string1) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-        for (String world : this.worldNodes.keySet()) {
-            if (world == null) {
-                continue;
-            }
+	@Override
+	public void save() {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-            if (world.equals(this.backend.getDefaultWorld())) {
-                world = "";
-            }
+	@Override
+	public void setOption(String option, String value, String world) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 
-            permissions.put(world, this.getPermissions(world, false));
-        }
-
-        return permissions;
-    }
-
-    @Override
-    public String getOption(String permission, String world, String defaultValue) {
-        Object value = null;
-
-        if (world != null && !world.isEmpty()) {
-            value = this.getNode(world).getProperty("info." + permission);
-        }
-
-        if (value == null || (world == null || world.isEmpty())) {
-            value = this.getDefaultWorldNode().getProperty("info." + permission);
-        }
-
-        if (value == null) {
-            return defaultValue;
-        }
-
-        return value.toString();
-    }
-
-    @Override
-    public Map<String, String> getOptions(String world) {
-        return this.getOptions(world, true);
-    }
-
-    public Map<String, String> getOptions(String world, boolean inheritance) {
-        Map<String, String> options = new HashMap<String, String>();
-
-        if (inheritance && !this.backend.getDefaultWorld().equals(world)) {
-            options.putAll(this.getOptions(this.backend.getDefaultWorld(), false));
-        }
-
-        ConfigurationNode node = this.getNode(world);
-        List<String> worldOptions = node.getKeys("info");
-        if (worldOptions != null) {
-            for (String option : worldOptions) {
-                if ("prefix".equals(option) || "suffix".equals(option) || "build".equals(option)) {
-                    continue;
-                }
-
-                Object property = node.getProperty("info." + option);
-
-                if (property == null) {
-                    continue;
-                }
-
-                if (property instanceof Map) {
-                    // TODO Write submap handling code
-                } else {
-                    options.put(option, property.toString());
-                }
-            }
-        }
-        return options;
-    }
-
-    @Override
-    public void addPermission(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
-
-    @Override
-    public void remove() {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
-
-    @Override
-    public void removePermission(String string, String string1) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
-
-    @Override
-    public void save() {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
-
-    @Override
-    public void setOption(String option, String value, String world) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
-
-    @Override
-    public void setPermissions(String[] strings, String string) {
-        Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
-    }
+	@Override
+	public void setPermissions(String[] strings, String string) {
+		Logger.getLogger("Minecraft").severe("[PermissionsCompat] P2Compat is read-only");
+	}
 }
