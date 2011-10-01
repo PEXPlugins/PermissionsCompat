@@ -147,7 +147,7 @@ public class P2Entity extends PermissionEntity {
 				collection.put(itemKey, (String)value);
 			} else if (value instanceof Map) {
 				collectInfoNodes(itemKey, (Map)value, collection);
-			} else {
+			} else if (value != null) {
 				collection.put(itemKey, value.toString());
 			}
 		}
