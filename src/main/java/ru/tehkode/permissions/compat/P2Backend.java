@@ -26,12 +26,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 import ru.tehkode.permissions.PermissionBackend;
 import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.config.Configuration;
-import ru.tehkode.permissions.config.ConfigurationNode;
 
 public class P2Backend extends PermissionBackend implements FilenameFilter {
 
@@ -141,7 +141,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
 		}
 		
         // Load groups
-        Map<String, ConfigurationNode> worldGroups = world.getNodesMap("groups");
+        Map<String, ConfigurationNode> worldGroups = world.getNodes("groups");
 
         if (worldGroups != null) {
             for (Map.Entry<String, ConfigurationNode> entry : worldGroups.entrySet()) {
@@ -155,7 +155,7 @@ public class P2Backend extends PermissionBackend implements FilenameFilter {
         }
 
         // Load users
-        Map<String, ConfigurationNode> userGroups = world.getNodesMap("users");
+        Map<String, ConfigurationNode> userGroups = world.getNodes("users");
 
         if (userGroups != null) {
             for (Map.Entry<String, ConfigurationNode> entry : userGroups.entrySet()) {

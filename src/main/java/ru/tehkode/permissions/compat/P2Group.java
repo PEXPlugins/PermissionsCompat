@@ -22,9 +22,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.bukkit.util.config.ConfigurationNode;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.ProxyPermissionGroup;
-import ru.tehkode.permissions.config.ConfigurationNode;
+
 
 public class P2Group extends ProxyPermissionGroup {
 

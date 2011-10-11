@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.bukkit.util.config.ConfigurationNode;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.ProxyPermissionUser;
-import ru.tehkode.permissions.config.ConfigurationNode;
 
 public class P2User extends ProxyPermissionUser {
 

@@ -24,9 +24,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import org.bukkit.util.config.ConfigurationNode;
 import ru.tehkode.permissions.PermissionEntity;
 import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.config.ConfigurationNode;
 
 public class P2Entity extends PermissionEntity {
 
